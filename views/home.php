@@ -27,7 +27,25 @@
           <p class="card-text"><?=$produto['descricao']; ?></p>
         </div>
         <div class="card-footer">
-          <a href="#" class="btn btn-primary">Comprar Agora</a>
+          <form method="POST" class="addtocartform" action="<?=BASE; ?>home/confirmacao">
+            <input type="hidden" name="id_produto" value="<?=$produto['id']; ?>" class="id_produto">
+            <input type="hidden" value="<?=number_format($produto['valor'], 2, '.', ''); ?>" class="form-control valor" name="valor" disabled>
+            <br>
+
+            <h3 class="subtotal">Total: R$<span><?=number_format($produto['valor'], 2, ',', '.'); ?></span></h3>
+
+            <button class="bt-acao" data-action="decrease">-</button>
+            <input type="number" min="1" value="1" name="quantidade" class="quantidade" readonly="">
+            <button class="bt-acao" data-action="increase">+</button><br><br>
+            <?php if (!empty($errocep)): ?>
+              <div class="alert alert-danger">
+                <strong>Erro!</strong> não vendemos para essa região!
+              </div>
+            <?php endif; ?>
+            <input type="text" name="cep" value="<?=(!empty($errocep))?$errocep:''; ?>" class="form-control cep" required="" placeholder="CEP"><br>
+
+            <button class="btn btn-primary btn-lg">COMPRAR AGORA</button>
+          </form>
         </div>
       </div>
     </div>

@@ -1,0 +1,16 @@
+#navbarResponsive a{
+	color: #000;
+}
+.navbar button, .navbar-toggler-icon {
+	border-color: #000;
+}
+.bt-acao{
+  background-color: #191970;
+  color: #fff;
+  font-size: 18px;
+}
+.quantidade{
+  width: 50px;
+  font-size: 18px;
+  text-align: center;
+}

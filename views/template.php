@@ -16,6 +16,9 @@
   
   <link href="<?=BASE; ?>assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
   <link href="<?=BASE; ?>assets/css/heroic-features.css" rel="stylesheet">
+  <link href="<?=BASE; ?>assets/css/style.css" rel="stylesheet">
+  <link rel="stylesheet" href="<?=BASE; ?>assets/css/fontawesome/css/all.min.css">
+  <script src="<?=BASE; ?>assets/vendor/jquery/jquery.min.js"></script>
 </head>
 
 <body>
@@ -23,7 +26,7 @@
   <!-- Navigation -->
   <nav class="navbar navbar-expand-lg bg-light fixed-top">
     <div class="container">
-      <a class="navbar-brand" href="#">
+      <a class="navbar-brand" href="<?=BASE; ?>">
         <img width="100" src="<?=BASE; ?>assets/img/<?=$c['logo']; ?>">
       </a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
@@ -32,18 +35,17 @@
       <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav ml-auto">
           <li class="nav-item active">
-            <a class="nav-link" href="#">Home
+            <a class="nav-link" href="<?=BASE; ?>">HOME
               <span class="sr-only">(current)</span>
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">About</a>
+            <a class="nav-link" href="#">LOGIN</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Services</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Contact</a>
+            <a href="<?=BASE; ?>home/carrinho" class="nav-link">
+              <i class="fas fa-cart-plus"></i> <?=(!empty($_SESSION['cart']))?count($_SESSION['cart']):'0'; ?>
+            </a>
           </li>
         </ul>
       </div>
@@ -65,7 +67,8 @@
   </footer>
 
   <!-- Bootstrap core JavaScript -->
-  <script src="<?=BASE; ?>assets/vendor/jquery/jquery.min.js"></script>
+  <script src="<?=BASE; ?>assets/js/jquery.mask.js"></script>
+  <script src="<?=BASE; ?>assets/js/scripts.js"></script>
   <script src="<?=BASE; ?>assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
