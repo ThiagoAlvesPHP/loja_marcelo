@@ -55,6 +55,24 @@ class Clientes extends model{
 
 		return $this->db->lastInsertId();
 	}
+	//atualizar cliente
+	public function up($post){
+		$fields = [];
+        foreach ($post as $key => $value) {
+            $fields[] = "$key=:$key";
+        }
+        $fields = implode(', ', $fields);
+		$sql = $this->db->prepare("
+			UPDATE cad_clientes 
+			SET {$fields}
+			WHERE id = '{$post['id']}'
+		");
+
+		foreach ($post as $key => $value) {
+            $sql->bindValue(":{$key}", $value);
+        }
+		$sql->execute();
+	}
 	//selecionar dados de cliente
 	public function get($id){
 		$sql = $this->db->query("

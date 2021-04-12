@@ -3,6 +3,7 @@
 }
 .navbar button, .navbar-toggler-icon {
 	border-color: #000;
+	color: #000;
 }
 .bt-acao{
   background-color: #191970;

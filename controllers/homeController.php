@@ -156,14 +156,14 @@ class homeController extends controller {
 				$_SESSION['lg'] = $id_cliente;
 				//$id_cliente = 1;
 				//array para registro de cartão
-				$cartao = array(
-					'id_cliente'=>$id_cliente,
-					'numero_cartao'=>$post['numero_cartao'],
-					'vencimento_mes'=>$post['vencimento_mes'],
-					'vencimento_ano'=>$post['vencimento_ano'],
-					'banco'=>$post['issuer'],
-					'bandeira'=>$post['bandeira']
-				);
+				// $cartao = array(
+				// 	'id_cliente'=>$id_cliente,
+				// 	'numero_cartao'=>$post['numero_cartao'],
+				// 	'vencimento_mes'=>$post['vencimento_mes'],
+				// 	'vencimento_ano'=>$post['vencimento_ano'],
+				// 	'banco'=>$post['issuer'],
+				// 	'bandeira'=>$post['bandeira']
+				// );
 				$compra = array(
 					'id_cliente'=>$id_cliente,
 					'codigo'=>'',
@@ -177,7 +177,7 @@ class homeController extends controller {
 					$compra['status'] = 1;
 					$com->set($compra, $_SESSION['cart']);
 					//registranbdo cartão
-					$cli->setCartao($cartao);
+					// $cli->setCartao($cartao);
 					unset($_SESSION['cart']);
 					header('Location: '.BASE.'home/carrinho_aprovado');
 				} else {
@@ -190,8 +190,7 @@ class homeController extends controller {
 			} else {
 				header('Location: '.BASE.'home/carrinho?errorCliente='.true);
 			}
-		}
-		
+		}	
 	}
 	//pagina de compra aprovada
 	public function carrinho_aprovado(){
@@ -226,9 +225,34 @@ class homeController extends controller {
 	//dados do cliente
 	public function meus_dados(){
 		$cli = new Clientes();
+		$sql = new Home();
 		if ($cli->verificarLogado()) {
 			$dados = array();
-			$cli = new Clientes();
+			$dados['cliente'] = $cli->get($_SESSION['lg']);
+			$post = filter_input_array(INPUT_POST, FILTER_DEFAULT);
+			//atualizar dados de cliente
+			if (!empty($post['nome'])) {
+
+				$url = "http://viacep.com.br/ws/".$post['cep']."/json/";
+				$ch = curl_init($url);
+				curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+				curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+				$consulta = json_decode(curl_exec($ch));
+
+				//verificar se estado foi liberado pelo sistema
+				if ($sql->validarUF($consulta->uf)) {
+					$post['id'] = $_SESSION['lg'];
+					if (!empty($post['senha'])) {
+						$post['senha'] = md5($post['senha']);
+					} else {
+						unset($post['senha']);
+					}
+					$cli->up($post);
+					header('Location: '.BASE.'home/meus_dados');
+				} else {
+					$dados['error_cep'] = true;
+				}
+			}
 
 			$this->loadTemplate('meus_dados', $dados);
 		} else {

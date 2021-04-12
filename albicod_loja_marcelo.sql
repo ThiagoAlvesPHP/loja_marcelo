@@ -1,14 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.5
+-- version 5.1.0
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: 12-Abr-2021 às 22:01
--- Versão do servidor: 10.1.38-MariaDB
--- versão do PHP: 7.3.2
+-- Tempo de geração: 13-Abr-2021 às 01:53
+-- Versão do servidor: 10.4.18-MariaDB
+-- versão do PHP: 7.4.16
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -19,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `albicod_loja_marcelo`
+-- Banco de dados: `albicod_loja_marcelo`
 --
 
 -- --------------------------------------------------------
@@ -42,8 +41,8 @@ CREATE TABLE `cad_clientes` (
   `bairro` varchar(100) NOT NULL,
   `cidade` varchar(100) NOT NULL,
   `estado` varchar(100) NOT NULL,
-  `status` int(11) NOT NULL DEFAULT '1',
-  `dt_registro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `status` int(11) NOT NULL DEFAULT 1,
+  `dt_registro` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -68,16 +67,9 @@ CREATE TABLE `cad_cliente_cartoes` (
   `vencimento_ano` int(11) NOT NULL,
   `banco` varchar(50) NOT NULL,
   `bandeira` varchar(50) NOT NULL,
-  `status` int(11) NOT NULL DEFAULT '1',
-  `dt_registro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `status` int(11) NOT NULL DEFAULT 1,
+  `dt_registro` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Extraindo dados da tabela `cad_cliente_cartoes`
---
-
-INSERT INTO `cad_cliente_cartoes` (`id`, `id_cliente`, `titular`, `numero_cartao`, `vencimento_mes`, `vencimento_ano`, `banco`, `bandeira`, `status`, `dt_registro`) VALUES
-(5, 2, '', 2147483647, 1, 29, '26', 'Visa', 1, '2021-04-12 14:56:13');
 
 -- --------------------------------------------------------
 
@@ -90,8 +82,8 @@ CREATE TABLE `cad_compras` (
   `id_cliente` int(11) NOT NULL,
   `codigo` varchar(100) NOT NULL,
   `total` float NOT NULL,
-  `status` int(11) NOT NULL DEFAULT '3',
-  `dt_registro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `status` int(11) NOT NULL DEFAULT 3,
+  `dt_registro` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -187,7 +179,7 @@ CREATE TABLE `cad_estados` (
   `id` int(11) NOT NULL,
   `nome` varchar(75) CHARACTER SET latin1 DEFAULT NULL,
   `uf` varchar(5) CHARACTER SET latin1 DEFAULT NULL,
-  `status` int(11) NOT NULL DEFAULT '2'
+  `status` int(11) NOT NULL DEFAULT 2
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -234,7 +226,7 @@ CREATE TABLE `cad_links` (
   `titulo` varchar(100) NOT NULL,
   `link` int(11) NOT NULL,
   `id_usuario` int(11) NOT NULL,
-  `dt_registro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `dt_registro` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -248,15 +240,15 @@ CREATE TABLE `cad_produtos` (
   `nome` varchar(100) NOT NULL,
   `valor` float NOT NULL,
   `descricao` text NOT NULL,
-  `estoque` int(11) NOT NULL DEFAULT '0',
+  `estoque` int(11) NOT NULL DEFAULT 0,
   `peso` float NOT NULL,
   `largura` float NOT NULL,
   `altura` float NOT NULL,
   `comprimento` float NOT NULL,
   `diametro` float NOT NULL,
-  `status` int(11) NOT NULL DEFAULT '1',
+  `status` int(11) NOT NULL DEFAULT 1,
   `id_usuario` int(11) NOT NULL,
-  `dt_registro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `dt_registro` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -315,8 +307,8 @@ CREATE TABLE `cad_usuarios` (
   `nome` varchar(100) NOT NULL,
   `email` varchar(100) NOT NULL,
   `senha` varchar(32) NOT NULL,
-  `status` int(11) NOT NULL DEFAULT '1',
-  `definicao` int(11) NOT NULL DEFAULT '1'
+  `status` int(11) NOT NULL DEFAULT 1,
+  `definicao` int(11) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -327,153 +319,153 @@ INSERT INTO `cad_usuarios` (`id`, `nome`, `email`, `senha`, `status`, `definicao
 (1, 'Administrador', 'admin@admin.com', '202cb962ac59075b964b07152d234b70', 1, 1);
 
 --
--- Indexes for dumped tables
+-- Índices para tabelas despejadas
 --
 
 --
--- Indexes for table `cad_clientes`
+-- Índices para tabela `cad_clientes`
 --
 ALTER TABLE `cad_clientes`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `cad_cliente_cartoes`
+-- Índices para tabela `cad_cliente_cartoes`
 --
 ALTER TABLE `cad_cliente_cartoes`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `cad_compras`
+-- Índices para tabela `cad_compras`
 --
 ALTER TABLE `cad_compras`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `cad_compra_produtos`
+-- Índices para tabela `cad_compra_produtos`
 --
 ALTER TABLE `cad_compra_produtos`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `cad_config`
+-- Índices para tabela `cad_config`
 --
 ALTER TABLE `cad_config`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `cad_definicao`
+-- Índices para tabela `cad_definicao`
 --
 ALTER TABLE `cad_definicao`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `cad_estados`
+-- Índices para tabela `cad_estados`
 --
 ALTER TABLE `cad_estados`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `cad_links`
+-- Índices para tabela `cad_links`
 --
 ALTER TABLE `cad_links`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `cad_produtos`
+-- Índices para tabela `cad_produtos`
 --
 ALTER TABLE `cad_produtos`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `cad_produto_imagens`
+-- Índices para tabela `cad_produto_imagens`
 --
 ALTER TABLE `cad_produto_imagens`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `cad_status`
+-- Índices para tabela `cad_status`
 --
 ALTER TABLE `cad_status`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `cad_usuarios`
+-- Índices para tabela `cad_usuarios`
 --
 ALTER TABLE `cad_usuarios`
   ADD PRIMARY KEY (`id`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- AUTO_INCREMENT de tabelas despejadas
 --
 
 --
--- AUTO_INCREMENT for table `cad_clientes`
+-- AUTO_INCREMENT de tabela `cad_clientes`
 --
 ALTER TABLE `cad_clientes`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
--- AUTO_INCREMENT for table `cad_cliente_cartoes`
+-- AUTO_INCREMENT de tabela `cad_cliente_cartoes`
 --
 ALTER TABLE `cad_cliente_cartoes`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
--- AUTO_INCREMENT for table `cad_compras`
+-- AUTO_INCREMENT de tabela `cad_compras`
 --
 ALTER TABLE `cad_compras`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
--- AUTO_INCREMENT for table `cad_compra_produtos`
+-- AUTO_INCREMENT de tabela `cad_compra_produtos`
 --
 ALTER TABLE `cad_compra_produtos`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
--- AUTO_INCREMENT for table `cad_config`
+-- AUTO_INCREMENT de tabela `cad_config`
 --
 ALTER TABLE `cad_config`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- AUTO_INCREMENT for table `cad_definicao`
+-- AUTO_INCREMENT de tabela `cad_definicao`
 --
 ALTER TABLE `cad_definicao`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
--- AUTO_INCREMENT for table `cad_estados`
+-- AUTO_INCREMENT de tabela `cad_estados`
 --
 ALTER TABLE `cad_estados`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 
 --
--- AUTO_INCREMENT for table `cad_links`
+-- AUTO_INCREMENT de tabela `cad_links`
 --
 ALTER TABLE `cad_links`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `cad_produtos`
+-- AUTO_INCREMENT de tabela `cad_produtos`
 --
 ALTER TABLE `cad_produtos`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- AUTO_INCREMENT for table `cad_produto_imagens`
+-- AUTO_INCREMENT de tabela `cad_produto_imagens`
 --
 ALTER TABLE `cad_produto_imagens`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- AUTO_INCREMENT for table `cad_status`
+-- AUTO_INCREMENT de tabela `cad_status`
 --
 ALTER TABLE `cad_status`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
--- AUTO_INCREMENT for table `cad_usuarios`
+-- AUTO_INCREMENT de tabela `cad_usuarios`
 --
 ALTER TABLE `cad_usuarios`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
