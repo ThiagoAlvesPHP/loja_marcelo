@@ -40,10 +40,29 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">LOGIN</a>
+            <?php if(!empty($_SESSION['lg'])): ?>
+              <a class="nav-link" href="<?=BASE; ?>home/meus_dados">MEUS DADOS</a>
+            <?php else: ?>
+              <a class="nav-link" href="<?=BASE; ?>home/login">LOGIN</a>
+            <?php endif; ?>
           </li>
           <li class="nav-item">
-            <a href="<?=BASE; ?>home/carrinho" class="nav-link">
+            <a class="nav-link" href="<?=$c['facebook']; ?>" title="Facebook" target="_blank"> 
+              <i class="fab fa-facebook"></i>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="<?=$c['instagram']; ?>" title="Instagram" target="_blank">
+              <i class="fab fa-instagram"></i>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="<?=$c['google_maps']; ?>" title="Google Maps" target="_blank">
+              <i class="fas fa-map-marker-alt"></i>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="<?=BASE; ?>home/carrinho" class="nav-link" title="Carrinho">
               <i class="fas fa-cart-plus"></i> <?=(!empty($_SESSION['cart']))?count($_SESSION['cart']):'0'; ?>
             </a>
           </li>

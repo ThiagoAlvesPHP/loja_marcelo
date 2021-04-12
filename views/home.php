@@ -42,7 +42,13 @@
                 <strong>Erro!</strong> não vendemos para essa região!
               </div>
             <?php endif; ?>
-            <input type="text" name="cep" value="<?=(!empty($errocep))?$errocep:''; ?>" class="form-control cep" required="" placeholder="CEP"><br>
+
+            <?php if (!empty($cliente)): ?>
+              <input type="text" name="cep" value="<?=$cliente['cep']; ?>" class="form-control cep" required="" placeholder="CEP"><br>
+            <?php else: ?>
+              <input type="text" name="cep" value="<?=(!empty($errocep))?$errocep:''; ?>" class="form-control cep" required="" placeholder="CEP"><br>
+            <?php endif; ?>
+            
 
             <button class="btn btn-primary btn-lg">COMPRAR AGORA</button>
           </form>

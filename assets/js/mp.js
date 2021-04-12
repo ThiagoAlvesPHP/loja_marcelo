@@ -17,6 +17,7 @@ $(function (){
 			$("#installments").empty();
 			$("#paymentMethodId").val("");
 			$('#bandeira span img').remove();
+			$('#bandeira input').val("");
 		}
 	});
 	//Obtenha o método de pagamento do cartão
@@ -35,10 +36,12 @@ $(function (){
 
 			//salva a resposta 0 do array recebido
 			let paymentMethod = response[0];
+
 			//salva o id no input com id paymentMethodId
 			document.getElementById('paymentMethodId').value = paymentMethod.id;
 			//enviar bandeira para div
 			$('#bandeira span').html('<img src="'+paymentMethod.secure_thumbnail+'">');
+			$('#bandeira input').val(paymentMethod.name);
 			//enviar id para o method getIssuers
 			getIssuers(paymentMethod.id);
 		} else {

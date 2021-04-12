@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: 10-Abr-2021 às 14:53
+-- Generation Time: 12-Abr-2021 às 22:01
 -- Versão do servidor: 10.1.38-MariaDB
 -- versão do PHP: 7.3.2
 
@@ -46,6 +46,13 @@ CREATE TABLE `cad_clientes` (
   `dt_registro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Extraindo dados da tabela `cad_clientes`
+--
+
+INSERT INTO `cad_clientes` (`id`, `nome`, `email`, `senha`, `tipo_doc`, `numero_doc`, `cep`, `endereco`, `numero`, `complemento`, `bairro`, `cidade`, `estado`, `status`, `dt_registro`) VALUES
+(2, 'Thiago dos Santos Alves', 'thiagoalves@albicod.com', '202cb962ac59075b964b07152d234b70', 'CPF', '02957693518', '01153-000', 'Pracinio Ricardo da Silva', 103, 'Casa', 'Teotonio Calheira', 'São Paulo', 'SP', 1, '2021-04-12 14:56:11');
+
 -- --------------------------------------------------------
 
 --
@@ -56,7 +63,6 @@ CREATE TABLE `cad_cliente_cartoes` (
   `id` int(11) NOT NULL,
   `id_cliente` int(11) NOT NULL,
   `titular` varchar(100) NOT NULL,
-  `cpf` varchar(50) NOT NULL,
   `numero_cartao` int(50) NOT NULL,
   `vencimento_mes` int(11) NOT NULL,
   `vencimento_ano` int(11) NOT NULL,
@@ -66,6 +72,13 @@ CREATE TABLE `cad_cliente_cartoes` (
   `dt_registro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Extraindo dados da tabela `cad_cliente_cartoes`
+--
+
+INSERT INTO `cad_cliente_cartoes` (`id`, `id_cliente`, `titular`, `numero_cartao`, `vencimento_mes`, `vencimento_ano`, `banco`, `bandeira`, `status`, `dt_registro`) VALUES
+(5, 2, '', 2147483647, 1, 29, '26', 'Visa', 1, '2021-04-12 14:56:13');
+
 -- --------------------------------------------------------
 
 --
@@ -74,11 +87,20 @@ CREATE TABLE `cad_cliente_cartoes` (
 
 CREATE TABLE `cad_compras` (
   `id` int(11) NOT NULL,
+  `id_cliente` int(11) NOT NULL,
   `codigo` varchar(100) NOT NULL,
   `total` float NOT NULL,
-  `status` int(11) NOT NULL,
+  `status` int(11) NOT NULL DEFAULT '3',
   `dt_registro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Extraindo dados da tabela `cad_compras`
+--
+
+INSERT INTO `cad_compras` (`id`, `id_cliente`, `codigo`, `total`, `status`, `dt_registro`) VALUES
+(2, 2, '1235694105', 3, 1, '2021-04-12 14:56:13'),
+(3, 2, '1235709654', 2, 1, '2021-04-12 19:27:52');
 
 -- --------------------------------------------------------
 
@@ -93,6 +115,14 @@ CREATE TABLE `cad_compra_produtos` (
   `quantidade` int(11) NOT NULL,
   `valor` float NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Extraindo dados da tabela `cad_compra_produtos`
+--
+
+INSERT INTO `cad_compra_produtos` (`id`, `id_compra`, `id_produto`, `quantidade`, `valor`) VALUES
+(7, 2, 1, 2, 1),
+(8, 3, 1, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -115,6 +145,7 @@ CREATE TABLE `cad_config` (
   `imagem` varchar(32) NOT NULL,
   `instagram` varchar(100) NOT NULL,
   `facebook` varchar(100) NOT NULL,
+  `google_maps` varchar(100) NOT NULL,
   `whatsapp` varchar(30) NOT NULL,
   `email` varchar(100) NOT NULL,
   `frete` float NOT NULL
@@ -124,8 +155,8 @@ CREATE TABLE `cad_config` (
 -- Extraindo dados da tabela `cad_config`
 --
 
-INSERT INTO `cad_config` (`id`, `loja`, `endereco`, `bairro`, `cep`, `cidade`, `estado`, `logo`, `favicon`, `title`, `titulo`, `imagem`, `instagram`, `facebook`, `whatsapp`, `email`, `frete`) VALUES
-(1, 'Albicod', 'Rua Pracinio Ricardo da Silva, 103', 'Teotonio Calheira', '45450-000', 'Gandu', 'BA', 'logo.webp', 'favicon.webp', 'Albicod - Loja', 'Albicod - Loja', 'carousel.png', 'https://www.instagram.com/thiagoalvesdevphp/?hl=pt-br', 'https://www.facebook.com/devthiagoalves/', '73999412514', 'thiagoalves@albicod.com', 1);
+INSERT INTO `cad_config` (`id`, `loja`, `endereco`, `bairro`, `cep`, `cidade`, `estado`, `logo`, `favicon`, `title`, `titulo`, `imagem`, `instagram`, `facebook`, `google_maps`, `whatsapp`, `email`, `frete`) VALUES
+(1, 'Albicod', 'Rua Pracinio Ricardo da Silva, 103', 'Teotonio Calheira', '45450-000', 'Gandu', 'BA', 'logo.webp', 'favicon.webp', 'Albicod - Loja', 'Albicod - Loja', 'carousel.png', 'https://www.instagram.com/thiagoalvesdevphp/?hl=pt-br', 'https://www.facebook.com/devthiagoalves/', 'https://goo.gl/maps/uhba7oxYx9ydQYyR7', '73999412514', 'thiagoalves@albicod.com', 1);
 
 -- --------------------------------------------------------
 
@@ -379,25 +410,25 @@ ALTER TABLE `cad_usuarios`
 -- AUTO_INCREMENT for table `cad_clientes`
 --
 ALTER TABLE `cad_clientes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `cad_cliente_cartoes`
 --
 ALTER TABLE `cad_cliente_cartoes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `cad_compras`
 --
 ALTER TABLE `cad_compras`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `cad_compra_produtos`
 --
 ALTER TABLE `cad_compra_produtos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `cad_config`

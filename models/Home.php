@@ -36,7 +36,6 @@ class Home extends model{
 			return false;
 		}
 	}
-
 	//calcular frete
 	public function freteCorreios($cepDestination, $dados) {
 		//cep de origem 13825000
@@ -112,7 +111,6 @@ class Home extends model{
 
 		return $array;
 	}
-
 	//consultar cep
 	public function cepConsultar($cep){
 		$url = "https://viacep.com.br/ws/".$cep."/xml/";
@@ -124,7 +122,6 @@ class Home extends model{
 
 		return $r;
 	}
-
 	//TRANSAÇÃO
 	public function transacaoMP($post){
 		MercadoPago\SDK::setAccessToken("TEST-3797020972438326-052422-ce17294d3464630399bf2bb218a700b9-490976225");
@@ -145,28 +142,5 @@ class Home extends model{
 	        'id' => $payment->id
 	    );
 	    return $resposta;
-	}
-
-	//atualizar configurações
-	public function setNewslleter($post){
-		$sql = $this->db->query("SELECT * FROM cad_newsletter WHERE emails = '{$post['emails']}' ");
-
-		if ($sql->rowCount() == 0) {
-			$fields = [];
-	        foreach ($post as $key => $value) {
-	            $fields[] = "$key=:$key";
-	        }
-	        $fields = implode(', ', $fields);
-			$sql = $this->db->prepare("INSERT INTO cad_newsletter SET {$fields}");
-
-			foreach ($post as $key => $value) {
-	            $sql->bindValue(":{$key}", $value);
-	        }
-			$sql->execute();
-
-			return true;
-		} else {
-			return false;
-		}
 	}
 }

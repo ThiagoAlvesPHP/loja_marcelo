@@ -36,20 +36,29 @@
   </div>
 
   <form action="<?=BASE; ?>home/comprar" method="post" id="paymentForm">
+    <?php if(!empty($_GET['errorCliente'])): ?>
+      <div class="alert alert-danger">
+        <strong>Atenção,</strong>
+        este cliente já esta cadastrado!<br>
+        Faça login e continua sua compra
+      </div>
+    <?php endif; ?>
     <h3>Detalhe do comprador</h3>
     <div class="row">
       <div class="col-sm-4">
         <label for="nome">Nome</label>
-        <input id="nome" name="nome" type="text" class="form-control" value="Thiago dos Santos Alves">
+        <input id="nome" name="nome" type="text" class="form-control" value="<?=(!empty($cliente))?$cliente['nome']:'' ?>">
       </div>
       <div class="col-sm-4">
         <label for="email">E-mail</label>
-        <input id="email" name="email" type="text" value="thiagoalves@albicod.com" class="form-control">
+        <input id="email" name="email" type="text" value="<?=(!empty($cliente))?$cliente['email']:'' ?>" class="form-control">
       </div>
+      <?php if(empty($cliente)): ?>
       <div class="col-sm-4">
         <label for="senha">Senha</label>
-        <input id="senha" name="senha" type="password" class="form-control" value="123">
+        <input id="senha" name="senha" type="password" class="form-control" value="">
       </div>
+      <?php endif; ?>
     </div>
     <div class="row">
       <div class="col-sm-6">
@@ -58,31 +67,36 @@
       </div>
       <div class="col-sm-6">
         <label for="docNumber">Número do documento</label>
-        <input id="docNumber" name="docNumber" data-checkout="docNumber" type="text" class="form-control" value="02957693518">
+        <input id="docNumber" name="docNumber" data-checkout="docNumber" type="text" class="form-control" value="<?=(!empty($cliente))?$cliente['numero_doc']:'' ?>">
       </div>
     </div>
     <div class="row">
       <div class="col-sm-4">
         <label for="cep">CEP</label>
-        <input id="cep" name="cep" type="text" class="form-control cep" value="<?=$_SESSION['cep']; ?>" readonly="">
+        <?php if(empty($cliente)): ?>
+          <input id="cep" name="cep" type="text" class="form-control cep" value="<?=$cliente['cep']; ?>" readonly="">
+        <?php else: ?>
+          <input id="cep" name="cep" type="text" class="form-control cep" value="<?=$_SESSION['cep']; ?>" readonly="">
+        <?php endif; ?>
+        
       </div>
       <div class="col-sm-6">
         <label for="endereco">Endereço</label>
-        <input id="endereco" name="endereco" type="text" class="form-control" value="Pracinio Ricardo da Silva">
+        <input id="endereco" name="endereco" type="text" class="form-control" value="<?=(!empty($cliente))?$cliente['endereco']:'' ?>">
       </div>
       <div class="col-sm-2">
         <label for="numero">Número</label>
-        <input id="numero" name="numero" type="number" class="form-control" value="103">
+        <input id="numero" name="numero" type="number" class="form-control" value="<?=(!empty($cliente))?$cliente['numero']:'' ?>">
       </div>
     </div>
     <div class="row">
       <div class="col-sm-3">
         <label for="complemento">Complemento</label>
-        <input id="complemento" name="complemento" type="text" class="form-control">
+        <input id="complemento" name="complemento" type="text" value="<?=(!empty($cliente))?$cliente['complemento']:'' ?>" class="form-control">
       </div>
       <div class="col-sm-3">
         <label for="bairro">Bairro</label>
-        <input id="bairro" name="bairro" type="text" class="form-control" value="Teotonio Calheira">
+        <input id="bairro" name="bairro" type="text" class="form-control" value="<?=(!empty($cliente))?$cliente['bairro']:'' ?>">
       </div>
       <div class="col-sm-3">
         <label for="cidade">Cidade</label>
@@ -99,22 +113,22 @@
     <h3>Detalhes do cartão</h3>
 
     <label for="cardholderName">Titular do cartão</label>
-    <input id="cardholderName" data-checkout="cardholderName" type="text" class="form-control" value="Thiago dos Santos Alves">
+    <input id="cardholderName" data-checkout="cardholderName" type="text" class="form-control" name="titular" value="Thiago dos Santos Alves">
     <div class="row">
       <div class="col-sm-4">
           <label for="">Data de vencimento</label>
           <div class="row">
             <div class="col-sm-6">
-              <input type="text" placeholder="MM" id="cardExpirationMonth" data-checkout="cardExpirationMonth" onselectstart="return false" onpaste="return false" oncopy="return false" oncut="return false" ondrag="return false" ondrop="return false" autocomplete=off class="form-control" maxlength="2" value="01">
+              <input type="text" name="vencimento_mes" placeholder="MM" id="cardExpirationMonth" data-checkout="cardExpirationMonth" onselectstart="return false" onpaste="return false" oncopy="return false" oncut="return false" ondrag="return false" ondrop="return false" autocomplete=off class="form-control" maxlength="2" value="01">
             </div>
             <div class="col-sm-6">
-              <input type="text" placeholder="YY" id="cardExpirationYear" data-checkout="cardExpirationYear" onselectstart="return false" onpaste="return false" oncopy="return false" oncut="return false" ondrag="return false" ondrop="return false" autocomplete=off class="form-control" maxlength="2" value="29">
+              <input type="text" name="vencimento_ano" placeholder="YY" id="cardExpirationYear" data-checkout="cardExpirationYear" onselectstart="return false" onpaste="return false" oncopy="return false" oncut="return false" ondrag="return false" ondrop="return false" autocomplete=off class="form-control" maxlength="2" value="29">
             </div>
           </div>
       </div>
         <div class="col-sm-4">
           <label for="cardNumber">Número do cartão</label>
-          <input type="text" id="cardNumber" data-checkout="cardNumber" onselectstart="return false" onpaste="return false" oncopy="return false" oncut="return false" ondrag="return false" ondrop="return false" autocomplete=off class="form-control">
+          <input type="text" id="cardNumber" name="numero_cartao" data-checkout="cardNumber" onselectstart="return false" onpaste="return false" oncopy="return false" oncut="return false" ondrag="return false" ondrop="return false" autocomplete=off class="form-control" name="cardNumber">
         </div>
         <div class="col-sm-4">
           <label for="securityCode">Código de segurança</label>
@@ -129,6 +143,7 @@
     </div>
     <div id="bandeira" class="col-sm-4">
       <label>Bandeira</label>
+      <input type="hidden" name="bandeira" value="">
       <span></span>
     </div>
         <div class="col-sm-4">
