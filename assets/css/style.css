@@ -15,3 +15,9 @@
   font-size: 18px;
   text-align: center;
 }
+.carrinho-true{
+	color: green;
+}
+.carrinho-false{
+	color: red;
+}

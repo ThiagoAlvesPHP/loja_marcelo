@@ -18,7 +18,12 @@
   <link href="<?=BASE; ?>assets/css/heroic-features.css" rel="stylesheet">
   <link href="<?=BASE; ?>assets/css/style.css" rel="stylesheet">
   <link rel="stylesheet" href="<?=BASE; ?>assets/css/fontawesome/css/all.min.css">
-  <script src="<?=BASE; ?>assets/vendor/jquery/jquery.min.js"></script>
+  <script src="<?=BASE; ?>assets/vendor/jquery/jquery.min.js"></script>]
+  <style type="text/css">
+    section{
+      margin-top: 10px;
+    }
+  </style>
 </head>
 
 <body>
@@ -35,65 +40,25 @@
       <div class="collapse navbar-collapse" id="navbarResponsive">
         <ul class="navbar-nav ml-auto">
           <li class="nav-item active">
-            <a class="nav-link" href="<?=BASE; ?>">HOME
+            <a class="nav-link" href="<?=BASE.'admin'; ?>">
+              <i class="fas fa-tachometer-alt"></i> 
+              DASHBOARD
               <span class="sr-only">(current)</span>
             </a>
           </li>
-          <li class="nav-item">
-            <?php if(!empty($_SESSION['lg'])): ?>
-              <a class="nav-link" href="<?=BASE; ?>home/meus_dados">MEUS DADOS</a>
-            <?php else: ?>
-              <a class="nav-link" href="<?=BASE; ?>home/login">LOGIN</a>
-            <?php endif; ?>
-          </li>
-          <li class="nav-item">
+          <!-- <li class="nav-item">
             <a class="nav-link" href="<?=$c['facebook']; ?>" title="Facebook" target="_blank"> 
               <i class="fab fa-facebook"></i>
             </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="<?=$c['instagram']; ?>" title="Instagram" target="_blank">
-              <i class="fab fa-instagram"></i>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="<?=$c['google_maps']; ?>" title="Google Maps" target="_blank">
-              <i class="fas fa-map-marker-alt"></i>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="<?=BASE; ?>home/carrinho" class="nav-link" title="Carrinho">
-              <i class="fas fa-cart-plus <?=(!empty($_SESSION['cart']))?'carrinho-true':'carrinho-false' ?>">
-                <?=(!empty($_SESSION['cart']))?count($_SESSION['cart']):'0'; ?>
-              </i> 
-            </a>
-          </li>
-          <!-- deslogar -->
-          <?php if(!empty($_SESSION['lg'])): ?>
-            <li class="nav-item">
-              <a class="nav-link" href="<?=BASE; ?>home/sair" title="Logout">
-                <i class="fas fa-sign-out-alt"></i>
-              </a>
-            </li>
-          <?php endif; ?>
+          </li> -->
         </ul>
       </div>
     </div>
   </nav>
+
   <div class="container">
     <?php $this->loadViewInTemplate($viewName, $viewData); ?>
   </div>
-  <!-- Footer -->
-  <footer class="py-5 bg-dark">
-    <div class="container">
-      <p class="m-0 text-center text-white">
-        Copyright &copy; Your Website <?=date('Y'); ?> - <?=$c['loja']; ?><br>
-        <?=$c['endereco']; ?><br>
-        <?=$c['cidade']; ?>/<?=$c['estado']; ?>
-      </p>
-    </div>
-    <!-- /.container -->
-  </footer>
 
   <!-- Bootstrap core JavaScript -->
   <script src="<?=BASE; ?>assets/js/jquery.mask.js"></script>

@@ -13,6 +13,10 @@ class controller {
 	public function loadTemplate($viewName, $viewData = array()) {
 		require 'views/template.php';
 	}
+	//carregando template administrativo
+	public function loadTemplateAdmin($viewName, $viewData = array()) {
+		require 'views/templateAdmin.php';
+	}
 
 	public function loadViewInTemplate($viewName, $viewData = array()) {
 		extract($viewData);

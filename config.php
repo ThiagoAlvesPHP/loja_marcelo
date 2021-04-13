@@ -13,10 +13,10 @@ if (!empty($match)) {
 	$config['dbuser'] = 'root';
 	$config['dbpass'] = '';
 } else {
-	define("BASE", "https://blueseeds.mercatapp.com.br/");
-	$config['dbname'] = 'mercat65_blueseeds';
+	define("BASE", "https://www.mercax.com.br/loja_marcelo/");
+	$config['dbname'] = 'mercaf30_loja_marcelo';
 	$config['host'] = 'localhost';
-	$config['dbuser'] = 'mercat65_admin';
+	$config['dbuser'] = 'mercaf30_admin';
 	$config['dbpass'] = '211085100705';
 }
 

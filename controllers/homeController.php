@@ -124,12 +124,28 @@ class homeController extends controller {
 			if ($transacao['status'] == 'approved') {
 				$compra['codigo'] = $transacao['id'];
 				$compra['status'] = 1;
+				$mensagem = "
+					Compra Realizada com Sucesso\r\n
+					Compra Codigo: ".$transacao['id']."\r\n
+					Valor: R$".$post['transactionAmount']."\r\n\r\n
+					Acesse: ".BASE." e saiba mais!
+				";
+				//enviar email
+				$h->mail($dadosCliente['email'], "Compras - Albicod", $mensagem);
 				$com->set($compra, $_SESSION['cart']);
 				unset($_SESSION['cart']);
 				header('Location: '.BASE.'home/carrinho_aprovado');
 			} else {
 				$compra['codigo'] = $transacao['id'];
 				$compra['status'] = 2;
+				$mensagem = "
+					Compra não aprovada\r\n
+					Compra Codigo: ".$transacao['id']."\r\n
+					Valor: R$".$post['transactionAmount']."\r\n\r\n
+					Acesse: ".BASE." e saiba mais!
+				";
+				//enviar email
+				$h->mail($dadosCliente['email'], "Compras - Albicod", $mensagem);
 				$com->set($compra, $_SESSION['cart']);
 				unset($_SESSION['cart']);
 				header('Location: '.BASE.'home/carrinho_reprovado');
@@ -175,6 +191,14 @@ class homeController extends controller {
 				if ($transacao['status'] == 'approved') {
 					$compra['codigo'] = $transacao['id'];
 					$compra['status'] = 1;
+					$mensagem = "
+						Compra Realizada com Sucesso\r\n
+						Compra Codigo: ".$transacao['id']."\r\n
+						Valor: R$".$post['transactionAmount']."\r\n\r\n
+						Acesse: ".BASE." e saiba mais!
+					";
+					//enviar email
+					$h->mail($dadosCliente['email'], "Compras - Albicod", $mensagem);
 					$com->set($compra, $_SESSION['cart']);
 					//registranbdo cartão
 					// $cli->setCartao($cartao);
@@ -183,6 +207,14 @@ class homeController extends controller {
 				} else {
 					$compra['codigo'] = $transacao['id'];
 					$compra['status'] = 2;
+					$mensagem = "
+						Compra não aprovada\r\n
+						Compra Codigo: ".$transacao['id']."\r\n
+						Valor: R$".$post['transactionAmount']."\r\n\r\n
+						Acesse: ".BASE." e saiba mais!
+					";
+					//enviar email
+					$h->mail($dadosCliente['email'], "Compras - Albicod", $mensagem);
 					$com->set($compra, $_SESSION['cart']);
 					unset($_SESSION['cart']);
 					header('Location: '.BASE.'home/carrinho_reprovado');
@@ -226,9 +258,11 @@ class homeController extends controller {
 	public function meus_dados(){
 		$cli = new Clientes();
 		$sql = new Home();
+		$com = new Compras();
 		if ($cli->verificarLogado()) {
 			$dados = array();
 			$dados['cliente'] = $cli->get($_SESSION['lg']);
+			$dados['compras'] = $com->getComprasCliente($_SESSION['lg']);
 			$post = filter_input_array(INPUT_POST, FILTER_DEFAULT);
 			//atualizar dados de cliente
 			if (!empty($post['nome'])) {
@@ -258,6 +292,13 @@ class homeController extends controller {
 		} else {
 			header('Location: '.BASE);
 		}
+	}
+	//said
+	public function sair(){
+		if (!empty($_SESSION['lg'])) {
+			unset($_SESSION['lg']);
+		}
+		header('Location: '.BASE);
 	}
 	public function ajax(){
 		$dados = array();

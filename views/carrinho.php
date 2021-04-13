@@ -74,7 +74,7 @@
       <div class="row">
         <div class="col-sm-4">
           <label for="cep">CEP</label>
-          <?php if(empty($cliente)): ?>
+          <?php if(!empty($cliente)): ?>
             <input id="cep" name="cep" type="text" class="form-control cep" value="<?=$cliente['cep']; ?>" readonly="">
           <?php else: ?>
             <input id="cep" name="cep" type="text" class="form-control cep" value="<?=$_SESSION['cep']; ?>" readonly="">
@@ -115,16 +115,16 @@
     <h3>Detalhes do cartão</h3>
     <div>
       <label for="cardholderName">Titular do cartão</label>
-      <input id="cardholderName" data-checkout="cardholderName" type="text" class="form-control" name="titular" value="Thiago dos Santos Alves">
+      <input id="cardholderName" data-checkout="cardholderName" type="text" class="form-control" name="titular">
       <div class="row">
         <div class="col-sm-4">
             <label for="">Data de vencimento</label>
             <div class="row">
               <div class="col-sm-6">
-                <input type="text" name="vencimento_mes" placeholder="MM" id="cardExpirationMonth" data-checkout="cardExpirationMonth" onselectstart="return false" onpaste="return false" oncopy="return false" oncut="return false" ondrag="return false" ondrop="return false" autocomplete=off class="form-control" maxlength="2" value="01">
+                <input type="text" name="vencimento_mes" placeholder="MM" id="cardExpirationMonth" data-checkout="cardExpirationMonth" onselectstart="return false" onpaste="return false" oncopy="return false" oncut="return false" ondrag="return false" ondrop="return false" autocomplete=off class="form-control" maxlength="2">
               </div>
               <div class="col-sm-6">
-                <input type="text" name="vencimento_ano" placeholder="YY" id="cardExpirationYear" data-checkout="cardExpirationYear" onselectstart="return false" onpaste="return false" oncopy="return false" oncut="return false" ondrag="return false" ondrop="return false" autocomplete=off class="form-control" maxlength="2" value="29">
+                <input type="text" name="vencimento_ano" placeholder="YY" id="cardExpirationYear" data-checkout="cardExpirationYear" onselectstart="return false" onpaste="return false" oncopy="return false" oncut="return false" ondrag="return false" ondrop="return false" autocomplete=off class="form-control" maxlength="2">
               </div>
             </div>
         </div>

@@ -143,4 +143,16 @@ class Home extends model{
 	    );
 	    return $resposta;
 	}
+
+	//email de notificãção de compra
+	public function mail($email, $assunto, $mensagem){
+
+		$headers = array(
+		    'From' => 'thiagoalves@albicod.com',
+		    'Reply-To' => 'albicod.com@gmail.com',
+		    'X-Mailer' => 'PHP/' . phpversion()
+		);
+
+		mail($email, $assunto, $mensagem, $headers);
+	}
 }

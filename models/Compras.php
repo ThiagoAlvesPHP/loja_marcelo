@@ -42,4 +42,13 @@ class Compras extends model{
         }
 		$sql->execute();
 	}
+	//compras de cliente
+	public function getComprasCliente($id_cliente){
+		$sql = $this->db->query("
+			SELECT * FROM cad_compras 
+			WHERE id_cliente = '{$id_cliente}' 
+		");
+
+		return $sql->fetchAll(PDO::FETCH_ASSOC);
+	}
 }
