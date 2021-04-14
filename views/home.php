@@ -10,7 +10,7 @@
       </div>
     </div>
   </div>
-  <h1 class="display-1 text-center"><?=$c['titulo']; ?></h1>
+  <h1 class="text-center"><?=$c['titulo']; ?></h1>
   <hr>
   <!-- Page Features -->
   <div class="row text-center">

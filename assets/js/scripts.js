@@ -1,6 +1,7 @@
 $(function(){
 
     $('.cep').mask('00000-000');
+    $('.price').mask('##0.00', {reverse: true});
 
 	$('.bt-acao').on('click keyup', function(e){
         e.preventDefault();

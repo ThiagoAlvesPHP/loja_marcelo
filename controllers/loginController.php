@@ -7,6 +7,7 @@ class loginController extends controller {
     }
 
 	public function index() {
+		$dados = array();
 		$c = new Usuarios();
 		$post = filter_input_array(INPUT_POST, FILTER_DEFAULT);
 		if (!empty($post)) {
