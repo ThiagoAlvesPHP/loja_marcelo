@@ -51,4 +51,39 @@ class Compras extends model{
 
 		return $sql->fetchAll(PDO::FETCH_ASSOC);
 	}
+	public function get($id){
+		$sql = $this->db->query("
+			SELECT 
+			cad_compras.*, 
+			cad_clientes.nome
+			FROM cad_compras 
+			INNER JOIN cad_clientes
+			ON cad_compras.id_cliente = cad_clientes.id
+			WHERE cad_compras.id = '{$id}' 
+		");
+
+		$dados = $sql->fetch(PDO::FETCH_ASSOC);
+		$dados['produtos'] = $this->getProdutosCompra($dados['id']);
+
+		return $dados;
+	}
+	//produtos da compra
+	public function getProdutosCompra($id_compra){
+		$sql = $this->db->query("
+			SELECT 
+			cad_compra_produtos.*, 
+			cad_produtos.nome
+			FROM cad_compra_produtos 
+			INNER JOIN cad_produtos
+			ON cad_compra_produtos.id_produto = cad_produtos.id
+			WHERE cad_compra_produtos.id_compra = '{$id_compra}' 
+		");
+
+		return $sql->fetch(PDO::FETCH_ASSOC);
+	}
+	//consulta data datatable
+	public function datatableAll($sql){
+		$sql = $this->db->query($sql);
+		return $sql->fetchAll(PDO::FETCH_ASSOC);
+	}
 }

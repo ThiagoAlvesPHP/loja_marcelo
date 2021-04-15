@@ -89,6 +89,20 @@ class adminController extends controller {
 		
 		$this->loadTemplateAdmin('admin_compras', $dados);
 	}
+	//compra
+	public function compra($id){
+		if (!empty($id)) {
+			$dados = array();
+			$compras = new Compras();
+			$dados['compra'] = $compras->get(base64_decode($id));
+
+			$post = filter_input_array(INPUT_POST, FILTER_DEFAULT);
+			
+			$this->loadTemplateAdmin('admin_compra', $dados);	
+		} else {
+			header('Location: '.BASE.'admin');
+		}
+	}
 	//produtos
 	public function produtos(){
 		$dados = array();
@@ -100,6 +114,79 @@ class adminController extends controller {
 		$dados = array();
 		
 		$this->loadTemplateAdmin('admin_usuarios', $dados);
+	}
+	//requisições ajax / datatable
+	public function ajax(){
+		$compras = new Compras();
+		$dashboard = new Dashboard();
+		$post = filter_input_array(INPUT_POST, FILTER_DEFAULT);
+
+		//produtos
+		if (!empty($post['compras'])) {
+			$requestData = $_REQUEST;
+			$columns = array(
+			    array(0 => 'id'),
+			    array(1 => 'id_cliente'),
+			    array(2 => 'codigo'),
+			    array(3 => 'total'),
+			    array(4 => 'status'),
+			    array(5 => 'dt_registro')
+			);
+			$count = $dashboard->countCompras();
+			$qnt_linhas = $count['c'];
+
+			$sql = "
+				SELECT 
+				cad_compras.*, 
+				cad_clientes.nome
+				FROM cad_compras 
+				INNER JOIN cad_clientes
+				ON cad_compras.id_cliente = cad_clientes.id
+				WHERE 1=1
+			";
+
+			if( !empty($requestData['search']['value']) ) {   
+				$sql.=" AND (cad_compras.id LIKE '%".$requestData['search']['value']."%' ";
+				$sql.=" OR cad_clientes.nome LIKE '%".$requestData['search']['value']."%' ";
+				$sql.=" OR cad_compras.codigo LIKE '%".$requestData['search']['value']."%' ";
+				$sql.=" OR cad_compras.total LIKE '%".$requestData['search']['value']."%' ";
+				$sql.=" OR cad_compras.status LIKE '%".$requestData['search']['value']."%' ";
+				$sql.=" OR cad_compras.dt_registro LIKE '%".$requestData['search']['value']."%' )";
+			}
+
+			$array = $compras->datatableAll($sql);
+			$totalFiltered = count($array);
+
+			//Ordenar o resultado
+			$sql .= " ORDER BY ". implode(' AND ', $columns[$requestData['order'][0]['column']])."   ".$requestData['order'][0]['dir']." LIMIT ".$requestData['start']." ,".$requestData['length']."   ";
+			$array = $compras->datatableAll($sql);
+
+			// Ler e criar o array de dados
+			$dados = array();
+
+			foreach ($array as $key => $value) {
+				$dado = array(); 	
+				
+				$dado[] = '<a href="'.BASE.'admin/compra/'.base64_encode($value['id']).'" class="btn btn-primary"><i class="fas fa-edit"></i></a>';
+				$dado[] = $value["nome"];
+				$dado[] = $value["codigo"];
+				$dado[] = $value["total"];
+				$dado[] = ($value['status'] == 1)?'<b style="color: green;">Aprovado</b>':'<b style="color: red;">Reprovado</b>';
+				$dado[] = date('d/m/Y', strtotime($value["dt_registro"]));
+
+				$dados[] = $dado;
+			}
+
+			//Cria o array de informações a serem retornadas para o Javascript
+			$json_data = array(
+				"draw" => intval( $requestData['draw'] ),//para cada requisição é enviado um número como parâmetro
+				"recordsTotal" => intval( $qnt_linhas ),  //Quantidade de registros que há no banco de dados
+				"recordsFiltered" => intval( $totalFiltered ), //Total de registros quando houver pesquisa
+				"data" => $dados   //Array de dados completo dos dados retornados da tabela 
+			);
+
+			echo json_encode($json_data);
+		}
 	}
 	//sair
 	public function sair(){

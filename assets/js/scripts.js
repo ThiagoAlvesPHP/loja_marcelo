@@ -77,4 +77,35 @@ $(function(){
             limpa_formulário_cep();
         }
     });
+
+    //ajax datatable
+    $(document).ready(function (){
+        let array = [];
+        array['compras'] = true;
+
+        $('#compras_list').DataTable({
+            "processing": true,
+            "serverSide": true,
+            "language": {
+                "lengthMenu": "_MENU_ registros por página",
+                "zeroRecords": "Nenhum registro encontrado",
+                "info": "Mostrando página _PAGE_ de _PAGES_",
+                "infoEmpty": "Nenhum registro disponível",
+                "infoFiltered": "(Filtrado de _MAX_ registros no total)",
+                "sSearch": "Pesquisar",
+                "oPaginate": {
+                "sNext": "Próximo",
+                "sPrevious": "Anterior",
+                "sFirst": "Primeiro",
+                "sLast": "Último"
+                },
+            },
+            "order": [[ 5, "desc" ]],
+            "ajax": {
+                "url": url+"admin/ajax",
+                "type": "POST",
+                "data":array
+            }
+        });
+    });
 });
