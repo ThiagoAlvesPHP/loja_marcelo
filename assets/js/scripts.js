@@ -1,20 +1,34 @@
 $(function(){
-
     $('.cep').mask('00000-000');
     $('.price').mask('##0.00', {reverse: true});
-
-    $(document).ready(function(){
-        $('.card-img-top').lightzoom();
+    // $(document).ready(function(){
+    //     $('.card-img-top').lightzoom();
+    // });
+    $(document).on('keyup', '#docNumber', function(){
+        let cpf = $(this).val();
+        if (cpf.length > 10) {
+            $.ajax({
+                type: 'POST',
+                url: url+'home/ajax',
+                data:{ cpf:cpf },
+                success:function(data){
+                    if (data == 1) {
+                        $('#error_doc').html('"CPF Valido"');
+                        $("#error_doc").css("color", "green");
+                    } else {
+                        $('#error_doc').html('"CPF Invalido"');
+                        $("#error_doc").css("color", "red");
+                    }
+                }
+            });
+        }
     });
-
+    //botões de adicionar e remover produto do carrinho
 	$('.bt-acao').on('click keyup', function(e){
         e.preventDefault();
-
         var qt = parseInt($('.quantidade').val());
         var action = $(this).attr('data-action');
-
         let div = $(this).parent();
-
         if(action == 'decrease') {
             if(qt-1 >= 1) {
                 qt = qt - 1;
@@ -23,15 +37,11 @@ $(function(){
         else if(action == 'increase') {
             qt = qt + 1;
         }
-
         $('.quantidade').val(qt);
-
         let valor = div.find('.valor').val();
-        
         let sub = (parseFloat(valor) * qt);
         $(div.find('.subtotal span')).html(sub.toFixed(2));
     });
-
     //Quando o campo cep perde o foco.
     $(".cep").blur(function() {
         //Nova variável "cep" somente com dígitos.
@@ -81,7 +91,7 @@ $(function(){
             limpa_formulário_cep();
         }
     });
-
+    //array vazio
     var array = [];
     //ajax datatable
     $(document).ready(function (){

@@ -1,5 +1,5 @@
-<script src="https://secure.mlstatic.com/sdk/javascript/v1/mercadopago.js"></script>
-<!-- <script type="text/javascript" src="<?=BASE; ?>assets/js/mp2.js"></script> -->
+<!-- <script src="https://secure.mlstatic.com/sdk/javascript/v1/mercadopago.js"></script> -->
+<script type="text/javascript" src="<?=BASE; ?>assets/js/mp2.js"></script>
  <!-- Page Content -->
 <section>
   <br>
