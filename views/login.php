@@ -1,6 +1,12 @@
+<br>
 <section>
   <h1>Login</h1>
   <hr>
+  <?php if(!empty($error_login)): ?>
+    <div class="alert alert-danger">
+      E-mail e/ou senha incorretos! 
+    </div>
+  <?php endif; ?>
   <form method="POST">
   	<label for="email">E-mail</label>
     <input name="email" type="email" class="form-control" required="" autofocus="">

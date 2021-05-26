@@ -3,6 +3,10 @@ $(function(){
     $('.cep').mask('00000-000');
     $('.price').mask('##0.00', {reverse: true});
 
+    $(document).ready(function(){
+        $('.card-img-top').lightzoom();
+    });
+
 	$('.bt-acao').on('click keyup', function(e){
         e.preventDefault();
 
@@ -78,11 +82,11 @@ $(function(){
         }
     });
 
+    var array = [];
     //ajax datatable
     $(document).ready(function (){
-        let array = [];
         array['compras'] = true;
-
+        //lista de compras
         $('#compras_list').DataTable({
             "processing": true,
             "serverSide": true,
@@ -101,6 +105,62 @@ $(function(){
                 },
             },
             "order": [[ 5, "desc" ]],
+            "ajax": {
+                "url": url+"admin/ajax",
+                "type": "POST",
+                "data":array
+            }
+        }); 
+    });
+    $(document).ready(function (){
+        array['clientes'] = true;
+        //lista de cliente
+        $('#clientes_list').DataTable({
+            "processing": true,
+            "serverSide": true,
+            "language": {
+                "lengthMenu": "_MENU_ registros por página",
+                "zeroRecords": "Nenhum registro encontrado",
+                "info": "Mostrando página _PAGE_ de _PAGES_",
+                "infoEmpty": "Nenhum registro disponível",
+                "infoFiltered": "(Filtrado de _MAX_ registros no total)",
+                "sSearch": "Pesquisar",
+                "oPaginate": {
+                "sNext": "Próximo",
+                "sPrevious": "Anterior",
+                "sFirst": "Primeiro",
+                "sLast": "Último"
+                },
+            },
+            "order": [[ 1, "desc" ]],
+            "ajax": {
+                "url": url+"admin/ajax",
+                "type": "POST",
+                "data":array
+            }
+        });
+    });
+    $(document).ready(function (){
+        array['usuarios'] = true;
+        //lista de cliente
+        $('#usuarios_list').DataTable({
+            "processing": true,
+            "serverSide": true,
+            "language": {
+                "lengthMenu": "_MENU_ registros por página",
+                "zeroRecords": "Nenhum registro encontrado",
+                "info": "Mostrando página _PAGE_ de _PAGES_",
+                "infoEmpty": "Nenhum registro disponível",
+                "infoFiltered": "(Filtrado de _MAX_ registros no total)",
+                "sSearch": "Pesquisar",
+                "oPaginate": {
+                "sNext": "Próximo",
+                "sPrevious": "Anterior",
+                "sFirst": "Primeiro",
+                "sLast": "Último"
+                },
+            },
+            "order": [[ 1, "asc" ]],
             "ajax": {
                 "url": url+"admin/ajax",
                 "type": "POST",

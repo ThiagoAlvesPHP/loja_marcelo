@@ -34,6 +34,13 @@
 		</div>
 	</div>
 	<br>
-	<i>Total: </i>R$<span style="color: green;"><?=$compra['total']; ?></span>
+	<i>Total: </i>R$<span style="color: green; font-size: 30px; font-weight: bold;"><?=number_format($compra['total'], 2, ',', '.'); ?></span>
+	<br>
+	<form method="POST">
+		<label>Link Rastreamento</label>
+		<input type="text" name="link_rastreamento" value="<?=$compra['link_rastreamento']; ?>" class="form-control">
+		<br>
+		<button class="btn btn-success">Enviar</button>
+	</form>
 </section>
 <br>

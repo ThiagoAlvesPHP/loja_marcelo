@@ -50,6 +50,11 @@
               CONFIGURAÇÕES
             </a>
           </li>
+          <li class="nav-item">
+            <a class="nav-link" href="<?=BASE; ?>admin/sair" title="Logout">
+              <i class="fas fa-sign-out-alt"></i>
+            </a>
+          </li>
         </ul>
       </div>
     </div>
@@ -60,6 +65,7 @@
   <!-- Bootstrap core JavaScript -->
   <script src="<?=BASE; ?>assets/js/jquery.mask.js"></script>
   <script src="<?=BASE; ?>assets/dataTable/dataTable.js"></script>
+  <script src="<?=BASE; ?>assets/js/lightzoom.js"></script>
   <script src="<?=BASE; ?>assets/js/config.js"></script>
   <script src="<?=BASE; ?>assets/js/scripts.js"></script>
   <script src="<?=BASE; ?>assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>

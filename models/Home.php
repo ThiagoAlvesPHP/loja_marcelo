@@ -23,7 +23,12 @@ class Home extends model{
 		$sql = $this->db->query("SELECT * FROM cad_produtos WHERE id = '{$id}' ");
 		return $sql->fetch(PDO::FETCH_ASSOC);
 	}
-	//dados do produto
+	//selecionar estados validos
+	public function getUf(){
+		$sql = $this->db->query("SELECT * FROM cad_estados WHERE status = 1");
+		return $sql->fetchAll(PDO::FETCH_ASSOC);
+	}
+	//validar estado
 	public function validarUF($uf){
 		$sql = $this->db->query("
 			SELECT * FROM cad_estados 

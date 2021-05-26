@@ -14,14 +14,14 @@
   <hr>
   <!-- Page Features -->
   <div class="row text-center">
-
-    <div class="col-lg-2 col-md-6 mb-3">
-      
-    </div>
-
-    <div class="col-lg-8 col-md-6 mb-3">
+    <div style="margin: auto;" class="col-lg-8 col-md-6 mb-3">
       <div class="card h-100">
-        <img class="card-img-top" src="<?=BASE; ?>assets/img/produtos/<?=$produto['img']; ?>" alt="<?=$produto['nome']; ?>">
+        <?php if (!empty($errocep)): ?>
+          <div class="alert alert-danger">
+            <strong>Erro!</strong> não vendemos para essa região!
+          </div>
+        <?php endif; ?>
+        <img src="<?=BASE; ?>assets/img/produtos/<?=$produto['img']; ?>" alt="<?=$produto['nome']; ?>">
         <div class="card-body">
           <h4 class="card-title"><?=$produto['nome']; ?></h4>
           <p class="card-text"><?=$produto['descricao']; ?></p>
@@ -54,10 +54,6 @@
           </form>
         </div>
       </div>
-    </div>
-
-    <div class="col-lg-2 col-md-6 mb-3">
-      
     </div>
   </div>
 </section>

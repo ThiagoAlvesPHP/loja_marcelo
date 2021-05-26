@@ -1,7 +1,7 @@
 <section>
 	<h3><i class="fas fa-shopping-cart"></i> Admin/Compras</h3>
 	<hr>
-	<!-- lista de clientes -->
+	<!-- lista de compras -->
 	<div class="table table-responsive">
 		<table class="table table-hover" id="compras_list">
 			<thead>

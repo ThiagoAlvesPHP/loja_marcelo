@@ -10,6 +10,9 @@
 	  <li class="nav-item">
 	    <a class="nav-link" data-toggle="pill" href="#menu1">Imagens</a>
 	  </li>
+	  <li class="nav-item">
+	  	<a class="nav-link" data-toggle="pill" href="#menu2">Estados</a>
+	  </li>
 	</ul>
 
 	<!-- Tab panes -->
@@ -84,44 +87,52 @@
 				<button class="btn btn-primary">Atualizar</button>
 			</form>
 	  	</div>
-	  <div class="tab-pane container fade" id="menu1">
-	  	<hr>
-	  	<div class="row">
-	  		<div class="col-sm-4">
-	  			<label>Favicon <small>200 x 140 WEBP</small></label>
-	  			<img class="img-thumbnail" src="<?=BASE; ?>assets/img/<?=$config['favicon']; ?>">
-	  			<br><br>
-	  			<form method="POST" enctype="multipart/form-data">
-	  				<input type="file" name="favicon">
-	  				<br><br>
-	  				<button class="btn btn-primary">Atualizar</button>
-	  			</form>
-	  		</div>
-	  		<div class="col-sm-4">
-	  			<label>Logo <small>400 x 150 WEBP</small></label>
-	  			<img class="img-thumbnail" src="<?=BASE; ?>assets/img/<?=$config['logo']; ?>">
-	  			<br><br>
-	  			<form method="POST" enctype="multipart/form-data">
-	  				<input type="file" name="logo">
-	  				<br><br>
-	  				<button class="btn btn-primary">Atualizar</button>
-	  			</form>
-	  		</div>
-	  		<div class="col-sm-4">
-	  			<label>Imagem Topo <small>1280 x 300 WEBP</small></label>
-	  			<img class="img-thumbnail" src="<?=BASE; ?>assets/img/<?=$config['imagem']; ?>">
-	  			<br><br>
-	  			<form method="POST" enctype="multipart/form-data">
-	  				<input type="file" name="imagem">
-	  				<br><br>
-	  				<button class="btn btn-primary">Atualizar</button>
-	  			</form>
-	  		</div>
+	  	<div class="tab-pane container fade" id="menu1">
+		  	<hr>
+		  	<div class="row">
+		  		<div class="col-sm-4">
+		  			<label>Favicon <small>200 x 140 WEBP</small></label>
+		  			<img class="img-thumbnail" src="<?=BASE; ?>assets/img/<?=$config['favicon']; ?>">
+		  			<br><br>
+		  			<form method="POST" enctype="multipart/form-data">
+		  				<input type="file" name="favicon">
+		  				<br><br>
+		  				<button class="btn btn-primary">Atualizar</button>
+		  			</form>
+		  		</div>
+		  		<div class="col-sm-4">
+		  			<label>Logo <small>400 x 150 WEBP</small></label>
+		  			<img class="img-thumbnail" src="<?=BASE; ?>assets/img/<?=$config['logo']; ?>">
+		  			<br><br>
+		  			<form method="POST" enctype="multipart/form-data">
+		  				<input type="file" name="logo">
+		  				<br><br>
+		  				<button class="btn btn-primary">Atualizar</button>
+		  			</form>
+		  		</div>
+		  		<div class="col-sm-4">
+		  			<label>Imagem Topo <small>1280 x 300 WEBP</small></label>
+		  			<img class="img-thumbnail" src="<?=BASE; ?>assets/img/<?=$config['imagem']; ?>">
+		  			<br><br>
+		  			<form method="POST" enctype="multipart/form-data">
+		  				<input type="file" name="imagem">
+		  				<br><br>
+		  				<button class="btn btn-primary">Atualizar</button>
+		  			</form>
+		  		</div>
+		  	</div>
 	  	</div>
-	  	<form method="POST">
-	  		
-	  	</form>
-	  </div>
+	  	<div class="tab-pane container fade" id="menu2">
+		  	<hr>
+		  	<form method="POST">
+		  		<?php foreach ($estados as $e): ?>
+		  			<input id="id<?=$e['nome']; ?>" type="checkbox" <?=($e['status'] == 1)?'checked=""':''; ?> name="status[]" value="<?=$e['id'] ?>">
+		  			<label for="id<?=$e['nome']; ?>"><?=$e['nome']; ?></label><br>
+		  		<?php endforeach; ?>
+		  		<br>
+		  		<button class="btn btn-primary">Atualizar</button>
+		  	</form>
+	  	</div>
 	</div>
 	<br>
 </section>

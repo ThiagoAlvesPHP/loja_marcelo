@@ -1,13 +1,14 @@
 -- phpMyAdmin SQL Dump
--- version 5.1.0
+-- version 4.8.5
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 13-Abr-2021 às 01:53
--- Versão do servidor: 10.4.18-MariaDB
--- versão do PHP: 7.4.16
+-- Generation Time: 15-Abr-2021 às 20:35
+-- Versão do servidor: 10.1.38-MariaDB
+-- versão do PHP: 7.3.2
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -18,7 +19,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Banco de dados: `albicod_loja_marcelo`
+-- Database: `albicod_loja_marcelo`
 --
 
 -- --------------------------------------------------------
@@ -41,8 +42,8 @@ CREATE TABLE `cad_clientes` (
   `bairro` varchar(100) NOT NULL,
   `cidade` varchar(100) NOT NULL,
   `estado` varchar(100) NOT NULL,
-  `status` int(11) NOT NULL DEFAULT 1,
-  `dt_registro` timestamp NOT NULL DEFAULT current_timestamp()
+  `status` int(11) NOT NULL DEFAULT '1',
+  `dt_registro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -67,8 +68,8 @@ CREATE TABLE `cad_cliente_cartoes` (
   `vencimento_ano` int(11) NOT NULL,
   `banco` varchar(50) NOT NULL,
   `bandeira` varchar(50) NOT NULL,
-  `status` int(11) NOT NULL DEFAULT 1,
-  `dt_registro` timestamp NOT NULL DEFAULT current_timestamp()
+  `status` int(11) NOT NULL DEFAULT '1',
+  `dt_registro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -82,17 +83,18 @@ CREATE TABLE `cad_compras` (
   `id_cliente` int(11) NOT NULL,
   `codigo` varchar(100) NOT NULL,
   `total` float NOT NULL,
-  `status` int(11) NOT NULL DEFAULT 3,
-  `dt_registro` timestamp NOT NULL DEFAULT current_timestamp()
+  `status` int(11) NOT NULL DEFAULT '3',
+  `link_rastreamento` varchar(100) DEFAULT NULL,
+  `dt_registro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Extraindo dados da tabela `cad_compras`
 --
 
-INSERT INTO `cad_compras` (`id`, `id_cliente`, `codigo`, `total`, `status`, `dt_registro`) VALUES
-(2, 2, '1235694105', 3, 1, '2021-04-12 14:56:13'),
-(3, 2, '1235709654', 2, 1, '2021-04-12 19:27:52');
+INSERT INTO `cad_compras` (`id`, `id_cliente`, `codigo`, `total`, `status`, `link_rastreamento`, `dt_registro`) VALUES
+(2, 2, '1235694105', 3, 1, 'https://www2.correios.com.br/sistemas/rastreamento/default.cfm', '2021-04-12 14:56:13'),
+(3, 2, '1235709654', 2, 2, '', '2021-04-12 19:27:52');
 
 -- --------------------------------------------------------
 
@@ -130,11 +132,11 @@ CREATE TABLE `cad_config` (
   `cep` varchar(30) NOT NULL,
   `cidade` varchar(100) NOT NULL,
   `estado` varchar(50) NOT NULL,
-  `logo` varchar(32) NOT NULL,
-  `favicon` varchar(32) NOT NULL,
+  `logo` varchar(100) NOT NULL,
+  `favicon` varchar(100) NOT NULL,
   `title` varchar(100) NOT NULL,
   `titulo` varchar(100) NOT NULL,
-  `imagem` varchar(32) NOT NULL,
+  `imagem` varchar(100) NOT NULL,
   `instagram` varchar(100) NOT NULL,
   `facebook` varchar(100) NOT NULL,
   `google_maps` varchar(100) NOT NULL,
@@ -148,7 +150,7 @@ CREATE TABLE `cad_config` (
 --
 
 INSERT INTO `cad_config` (`id`, `loja`, `endereco`, `bairro`, `cep`, `cidade`, `estado`, `logo`, `favicon`, `title`, `titulo`, `imagem`, `instagram`, `facebook`, `google_maps`, `whatsapp`, `email`, `frete`) VALUES
-(1, 'Albicod', 'Rua Pracinio Ricardo da Silva, 103', 'Teotonio Calheira', '45450-000', 'Gandu', 'BA', 'logo.webp', 'favicon.webp', 'Albicod - Loja', 'Albicod - Loja', 'carousel.png', 'https://www.instagram.com/thiagoalvesdevphp/?hl=pt-br', 'https://www.facebook.com/devthiagoalves/', 'https://goo.gl/maps/uhba7oxYx9ydQYyR7', '73999412514', 'thiagoalves@albicod.com', 1);
+(1, 'Albicod', 'Rua Pracinio Ricardo da Silva, 103', 'Teotonio Calheira', '45450-000', 'Gandu', 'BA', 'd8b606e519b03de16173f2c2ebea821c.webp', 'ce9a8f6e2b23cb261bdb2933f43cc192.webp', 'Albicod - Loja', 'Compre Agora', '74e5d344798bda749ccaae4a14031d04.webp', 'https://www.instagram.com/thiagoalvesdevphp/?hl=pt-br', 'https://www.facebook.com/devthiagoalves/', 'https://goo.gl/maps/uhba7oxYx9ydQYyR7', '73999412514', 'thiagoalves@albicod.com', 1);
 
 -- --------------------------------------------------------
 
@@ -179,7 +181,7 @@ CREATE TABLE `cad_estados` (
   `id` int(11) NOT NULL,
   `nome` varchar(75) CHARACTER SET latin1 DEFAULT NULL,
   `uf` varchar(5) CHARACTER SET latin1 DEFAULT NULL,
-  `status` int(11) NOT NULL DEFAULT 2
+  `status` int(11) NOT NULL DEFAULT '2'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -226,7 +228,7 @@ CREATE TABLE `cad_links` (
   `titulo` varchar(100) NOT NULL,
   `link` int(11) NOT NULL,
   `id_usuario` int(11) NOT NULL,
-  `dt_registro` timestamp NOT NULL DEFAULT current_timestamp()
+  `dt_registro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
@@ -240,15 +242,15 @@ CREATE TABLE `cad_produtos` (
   `nome` varchar(100) NOT NULL,
   `valor` float NOT NULL,
   `descricao` text NOT NULL,
-  `estoque` int(11) NOT NULL DEFAULT 0,
+  `estoque` int(11) NOT NULL DEFAULT '0',
   `peso` float NOT NULL,
   `largura` float NOT NULL,
   `altura` float NOT NULL,
   `comprimento` float NOT NULL,
   `diametro` float NOT NULL,
-  `status` int(11) NOT NULL DEFAULT 1,
+  `status` int(11) NOT NULL DEFAULT '1',
   `id_usuario` int(11) NOT NULL,
-  `dt_registro` timestamp NOT NULL DEFAULT current_timestamp()
+  `dt_registro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -256,7 +258,7 @@ CREATE TABLE `cad_produtos` (
 --
 
 INSERT INTO `cad_produtos` (`id`, `nome`, `valor`, `descricao`, `estoque`, `peso`, `largura`, `altura`, `comprimento`, `diametro`, `status`, `id_usuario`, `dt_registro`) VALUES
-(1, 'Produto 01', 1, '<ul>\r\n	<li>Taxa de atualiza&ccedil;&atilde;o de 144Hz e tempo de resposta de 1ms</li>\r\n	<li>Tecnologia AMD Radeon Free Sync para imagens perfeitamente sincronizadas</li>\r\n	<li>M&uacute;ltipla conectividade: DP, HDMI</li>\r\n	<li>Tecnologia Blue Light Shield &amp; antioscila&ccedil;&atilde;o para redu&ccedil;&atilde;o da fadiga</li>\r\n</ul>\r\n', 100, 1, 10, 20, 5, 60, 1, 1, '2021-04-08 19:04:18');
+(1, 'Produto 01', 1, '<ul>\r\n	<li>Taxa de atualiza&ccedil;&atilde;o de 144Hz e tempo de resposta de 1ms</li>\r\n	<li>Tecnologia AMD Radeon Free Sync para imagens perfeitamente sincronizadas</li>\r\n	<li>M&uacute;ltipla conectividade: DP, HDMI</li>\r\n	<li>Tecnologia Blue Light Shield &amp; antioscila&ccedil;&atilde;o para redu&ccedil;&atilde;o da fadiga</li>\r\n</ul>\r\n', 100, 1, 10, 20, 5, 5, 1, 1, '2021-04-08 19:04:18');
 
 -- --------------------------------------------------------
 
@@ -275,26 +277,7 @@ CREATE TABLE `cad_produto_imagens` (
 --
 
 INSERT INTO `cad_produto_imagens` (`id`, `id_produto`, `imagem`) VALUES
-(1, 1, 'produto.jpeg');
-
--- --------------------------------------------------------
-
---
--- Estrutura da tabela `cad_status`
---
-
-CREATE TABLE `cad_status` (
-  `id` int(11) NOT NULL,
-  `status` varchar(30) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Extraindo dados da tabela `cad_status`
---
-
-INSERT INTO `cad_status` (`id`, `status`) VALUES
-(1, 'Ativo'),
-(2, 'Inativo');
+(1, 1, '612c30bf7e65100a0dcde5a1acd13a39.webp');
 
 -- --------------------------------------------------------
 
@@ -306,169 +289,159 @@ CREATE TABLE `cad_usuarios` (
   `id` int(11) NOT NULL,
   `nome` varchar(100) NOT NULL,
   `email` varchar(100) NOT NULL,
+  `login` varchar(100) NOT NULL,
   `senha` varchar(32) NOT NULL,
-  `status` int(11) NOT NULL DEFAULT 1,
-  `definicao` int(11) NOT NULL DEFAULT 1
+  `status` int(11) NOT NULL DEFAULT '1',
+  `definicao` int(11) NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Extraindo dados da tabela `cad_usuarios`
 --
 
-INSERT INTO `cad_usuarios` (`id`, `nome`, `email`, `senha`, `status`, `definicao`) VALUES
-(1, 'Administrador', 'admin@admin.com', '202cb962ac59075b964b07152d234b70', 1, 1);
+INSERT INTO `cad_usuarios` (`id`, `nome`, `email`, `login`, `senha`, `status`, `definicao`) VALUES
+(1, 'Administrador', 'admin@admin.com', 'admin', '202cb962ac59075b964b07152d234b70', 1, 1),
+(2, 'Leidy Brito', 'leide@hotmail.com', 'leidy', '202cb962ac59075b964b07152d234b70', 1, 1);
 
 --
--- Índices para tabelas despejadas
+-- Indexes for dumped tables
 --
 
 --
--- Índices para tabela `cad_clientes`
+-- Indexes for table `cad_clientes`
 --
 ALTER TABLE `cad_clientes`
   ADD PRIMARY KEY (`id`);
 
 --
--- Índices para tabela `cad_cliente_cartoes`
+-- Indexes for table `cad_cliente_cartoes`
 --
 ALTER TABLE `cad_cliente_cartoes`
   ADD PRIMARY KEY (`id`);
 
 --
--- Índices para tabela `cad_compras`
+-- Indexes for table `cad_compras`
 --
 ALTER TABLE `cad_compras`
   ADD PRIMARY KEY (`id`);
 
 --
--- Índices para tabela `cad_compra_produtos`
+-- Indexes for table `cad_compra_produtos`
 --
 ALTER TABLE `cad_compra_produtos`
   ADD PRIMARY KEY (`id`);
 
 --
--- Índices para tabela `cad_config`
+-- Indexes for table `cad_config`
 --
 ALTER TABLE `cad_config`
   ADD PRIMARY KEY (`id`);
 
 --
--- Índices para tabela `cad_definicao`
+-- Indexes for table `cad_definicao`
 --
 ALTER TABLE `cad_definicao`
   ADD PRIMARY KEY (`id`);
 
 --
--- Índices para tabela `cad_estados`
+-- Indexes for table `cad_estados`
 --
 ALTER TABLE `cad_estados`
   ADD PRIMARY KEY (`id`);
 
 --
--- Índices para tabela `cad_links`
+-- Indexes for table `cad_links`
 --
 ALTER TABLE `cad_links`
   ADD PRIMARY KEY (`id`);
 
 --
--- Índices para tabela `cad_produtos`
+-- Indexes for table `cad_produtos`
 --
 ALTER TABLE `cad_produtos`
   ADD PRIMARY KEY (`id`);
 
 --
--- Índices para tabela `cad_produto_imagens`
+-- Indexes for table `cad_produto_imagens`
 --
 ALTER TABLE `cad_produto_imagens`
   ADD PRIMARY KEY (`id`);
 
 --
--- Índices para tabela `cad_status`
---
-ALTER TABLE `cad_status`
-  ADD PRIMARY KEY (`id`);
-
---
--- Índices para tabela `cad_usuarios`
+-- Indexes for table `cad_usuarios`
 --
 ALTER TABLE `cad_usuarios`
   ADD PRIMARY KEY (`id`);
 
 --
--- AUTO_INCREMENT de tabelas despejadas
+-- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT de tabela `cad_clientes`
+-- AUTO_INCREMENT for table `cad_clientes`
 --
 ALTER TABLE `cad_clientes`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
--- AUTO_INCREMENT de tabela `cad_cliente_cartoes`
+-- AUTO_INCREMENT for table `cad_cliente_cartoes`
 --
 ALTER TABLE `cad_cliente_cartoes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT de tabela `cad_compras`
+-- AUTO_INCREMENT for table `cad_compras`
 --
 ALTER TABLE `cad_compras`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
--- AUTO_INCREMENT de tabela `cad_compra_produtos`
+-- AUTO_INCREMENT for table `cad_compra_produtos`
 --
 ALTER TABLE `cad_compra_produtos`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
--- AUTO_INCREMENT de tabela `cad_config`
+-- AUTO_INCREMENT for table `cad_config`
 --
 ALTER TABLE `cad_config`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- AUTO_INCREMENT de tabela `cad_definicao`
+-- AUTO_INCREMENT for table `cad_definicao`
 --
 ALTER TABLE `cad_definicao`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
--- AUTO_INCREMENT de tabela `cad_estados`
+-- AUTO_INCREMENT for table `cad_estados`
 --
 ALTER TABLE `cad_estados`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 
 --
--- AUTO_INCREMENT de tabela `cad_links`
+-- AUTO_INCREMENT for table `cad_links`
 --
 ALTER TABLE `cad_links`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT de tabela `cad_produtos`
+-- AUTO_INCREMENT for table `cad_produtos`
 --
 ALTER TABLE `cad_produtos`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- AUTO_INCREMENT de tabela `cad_produto_imagens`
+-- AUTO_INCREMENT for table `cad_produto_imagens`
 --
 ALTER TABLE `cad_produto_imagens`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- AUTO_INCREMENT de tabela `cad_status`
---
-ALTER TABLE `cad_status`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
---
--- AUTO_INCREMENT de tabela `cad_usuarios`
+-- AUTO_INCREMENT for table `cad_usuarios`
 --
 ALTER TABLE `cad_usuarios`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

@@ -1,4 +1,5 @@
 <?php $c = (new Home())->getConfig(); ?>
+<?php $estados = (new Home())->getUf(); ?>
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -18,11 +19,12 @@
   <link href="<?=BASE; ?>assets/css/heroic-features.css" rel="stylesheet">
   <link href="<?=BASE; ?>assets/css/style.css" rel="stylesheet">
   <link rel="stylesheet" href="<?=BASE; ?>assets/css/fontawesome/css/all.min.css">
+  <link rel="stylesheet" href="<?=BASE; ?>assets/dataTable/dataTable.css">
+  <link rel="stylesheet" href="<?=BASE; ?>assets/css/glassstyle.css">
   <script src="<?=BASE; ?>assets/vendor/jquery/jquery.min.js"></script>
 </head>
 
 <body>
-
   <!-- Navigation bg-light -->
   <nav class="navbar navbar-expand-lg bg-light fixed-top">
     <div class="container">
@@ -46,6 +48,14 @@
               <a class="nav-link" href="<?=BASE; ?>home/login">LOGIN</a>
             <?php endif; ?>
           </li>
+          <?php if(empty($_SESSION['lg'])): ?>
+            <li class="nav-item">
+              <a class="nav-link" href="<?=BASE; ?>home/cadastro"> 
+                CADASTRO
+              </a>
+            </li>
+          <?php endif; ?>
+          
           <li class="nav-item">
             <a class="nav-link" href="<?=$c['facebook']; ?>" title="Facebook" target="_blank"> 
               <i class="fab fa-facebook"></i>
@@ -86,17 +96,34 @@
   <!-- Footer -->
   <footer class="py-5 bg-dark">
     <div class="container">
-      <p class="m-0 text-center text-white">
-        Copyright &copy; Your Website <?=date('Y'); ?> - <?=$c['loja']; ?><br>
-        <?=$c['endereco']; ?><br>
-        <?=$c['cidade']; ?>/<?=$c['estado']; ?>
-      </p>
+      <div class="row">
+        <div class="col-sm-6">
+          <p class="m-0 text-center text-white">
+            Copyright &copy; Your Website <?=date('Y'); ?> - <?=$c['loja']; ?><br>
+            <?=$c['endereco']; ?><br>
+            <?=$c['cidade']; ?>/<?=$c['estado']; ?><br>
+            Construído por <a href="https://www.albicod.com/" style="color: #fff;">Albicod</a>
+          </p>
+        </div>
+        <div class="col-sm-6">
+          <p class="m-0 text-center text-white">
+            Estados que Vendemos<br>
+            <?php foreach($estados as $e): ?>
+              <?=$e['nome']; ?><br>
+            <?php endforeach; ?>
+          </p>
+        </div>
+      </div>
+      
     </div>
     <!-- /.container -->
   </footer>
 
   <!-- Bootstrap core JavaScript -->
+  <script src="<?=BASE; ?>assets/dataTable/dataTable.js"></script>
   <script src="<?=BASE; ?>assets/js/jquery.mask.js"></script>
+  <script src="<?=BASE; ?>assets/js/lightzoom.js"></script>
+  <script src="<?=BASE; ?>assets/js/config.js"></script>
   <script src="<?=BASE; ?>assets/js/scripts.js"></script>
   <script src="<?=BASE; ?>assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 </body>

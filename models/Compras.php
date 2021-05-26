@@ -67,6 +67,24 @@ class Compras extends model{
 
 		return $dados;
 	}
+	//cadatrar cliente
+	public function up($post){
+		$fields = [];
+        foreach ($post as $key => $value) {
+            $fields[] = "$key=:$key";
+        }
+        $fields = implode(', ', $fields);
+		$sql = $this->db->prepare("
+			UPDATE cad_compras 
+			SET {$fields}
+			WHERE id = '{$post['id']}'
+		");
+
+		foreach ($post as $key => $value) {
+            $sql->bindValue(":{$key}", $value);
+        }
+		$sql->execute();
+	}
 	//produtos da compra
 	public function getProdutosCompra($id_compra){
 		$sql = $this->db->query("
@@ -85,5 +103,22 @@ class Compras extends model{
 	public function datatableAll($sql){
 		$sql = $this->db->query($sql);
 		return $sql->fetchAll(PDO::FETCH_ASSOC);
+	}
+
+	public function getSearch($mes, $ano){
+		$sql = $this->db->query("
+			SELECT 
+			cad_compras.*, 
+			cad_clientes.nome
+			FROM cad_compras 
+			INNER JOIN cad_clientes
+			ON cad_compras.id_cliente = cad_clientes.id
+			WHERE MONTH(cad_compras.dt_registro) = '{$mes}' 
+			AND YEAR(cad_compras.dt_registro) = '{$ano}'
+			AND cad_compras.status = 1
+			ORDER BY cad_compras.dt_registro DESC
+		");
+
+		return $sql->fetchAll(PDO::FETCH_ASSOC);;
 	}
 }

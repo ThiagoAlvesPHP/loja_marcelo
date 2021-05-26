@@ -6,6 +6,7 @@ class Usuarios extends model{
 			SELECT id FROM cad_usuarios 
 			WHERE login = :login
 			AND senha = :senha
+			AND status = 1
 		');
 		$sql->bindValue(':login', $post['login']);
 		$sql->bindValue(':senha', md5($post['senha']));
@@ -21,42 +22,57 @@ class Usuarios extends model{
 	//selecionar dados de cliente
 	public function get($id){
 		$sql = $this->db->query("
-			SELECT * FROM cad_clientes 
+			SELECT * FROM cad_usuarios 
 			WHERE id = '{$id}' 
 		");
 
 		return $sql->fetch(PDO::FETCH_ASSOC);
 	}
-	//dados do config
-	public function verificarEmail($email){
-		$sql = $this->db->query("
-			SELECT * FROM cad_clientes 
-			WHERE email = '{$email}' 
-		");
+	//verificar se emaile login já existem
+	public function verificarLoginEmail($post, $id = ''){
 
-		if ($sql->rowCount() == 0) {
-			return true;
+		if (!empty($id)) {
+			$sql = $this->db->query("
+				SELECT * FROM cad_usuarios 
+				WHERE id != '{$id}'
+			");
+			$sql = $sql->fetchAll(PDO::FETCH_ASSOC);
+			foreach ($sql as $c) {
+				if ($c['email'] == $post['email'] OR $c['login'] == $post['login']) {
+					return false;
+				} else {
+					return true;
+				}
+			}
 		} else {
-			return false;
+			$sql = $this->db->query("
+				SELECT * FROM cad_usuarios 
+				WHERE email = '{$post['email']}'
+				OR login = '{$post['login']}' 
+			");
+
+			if ($sql->rowCount() == 0) {
+				return true;
+			} else {
+				return false;
+			}
 		}
 	}
-	//cadatrar cliente
+	//cadatrar de usuario
 	public function set($post){
 		$fields = [];
         foreach ($post as $key => $value) {
             $fields[] = "$key=:$key";
         }
         $fields = implode(', ', $fields);
-		$sql = $this->db->prepare("INSERT INTO cad_clientes SET {$fields}");
+		$sql = $this->db->prepare("INSERT INTO cad_usuarios SET {$fields}");
 
 		foreach ($post as $key => $value) {
             $sql->bindValue(":{$key}", $value);
         }
 		$sql->execute();
-
-		return $this->db->lastInsertId();
 	}
-	//atualizar cliente
+	//atualizar usuario
 	public function up($post){
 		$fields = [];
         foreach ($post as $key => $value) {
@@ -64,25 +80,10 @@ class Usuarios extends model{
         }
         $fields = implode(', ', $fields);
 		$sql = $this->db->prepare("
-			UPDATE cad_clientes 
+			UPDATE cad_usuarios 
 			SET {$fields}
 			WHERE id = '{$post['id']}'
 		");
-
-		foreach ($post as $key => $value) {
-            $sql->bindValue(":{$key}", $value);
-        }
-		$sql->execute();
-	}
-	
-	//cadatrar cliente
-	public function setCartao($post){
-		$fields = [];
-        foreach ($post as $key => $value) {
-            $fields[] = "$key=:$key";
-        }
-        $fields = implode(', ', $fields);
-		$sql = $this->db->prepare("INSERT INTO cad_cliente_cartoes SET {$fields}");
 
 		foreach ($post as $key => $value) {
             $sql->bindValue(":{$key}", $value);

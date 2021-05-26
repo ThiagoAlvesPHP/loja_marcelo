@@ -1,13 +1,15 @@
 <script src="https://secure.mlstatic.com/sdk/javascript/v1/mercadopago.js"></script>
-<!-- Page Content -->
+<!-- <script type="text/javascript" src="<?=BASE; ?>assets/js/mp2.js"></script> -->
+ <!-- Page Content -->
 <section>
+  <br>
   <h1>Confirmação</h1>
   <hr>
   <div class="row">
 
     <div class="col-lg-6 col-md-6 mb-3">
       <div class="card h-100">
-        <img class="card-img-top" src="<?=BASE; ?>assets/img/produtos/<?=$produto['img']; ?>" alt="<?=$produto['nome']; ?>">
+        <img src="<?=BASE; ?>assets/img/produtos/<?=$produto['img']; ?>" alt="<?=$produto['nome']; ?>">
       </div>
     </div>
 
@@ -36,10 +38,17 @@
   </div>
 
   <form action="<?=BASE; ?>home/comprar" method="post" id="paymentForm">
-    <?php if(!empty($_GET['errorCliente'])): ?>
+    <?php if(!empty($_GET['errorEmail'])): ?>
       <div class="alert alert-danger">
         <strong>Atenção,</strong>
-        este cliente já esta cadastrado!<br>
+        Este E-mail já esta cadastrado!<br>
+        Faça login e continua sua compra
+      </div>
+    <?php endif; ?>
+    <?php if(!empty($_GET['errorCpf'])): ?>
+      <div class="alert alert-danger">
+        <strong>Atenção,</strong>
+        Este CPF já esta cadastrado!<br>
         Faça login e continua sua compra
       </div>
     <?php endif; ?>
@@ -64,11 +73,11 @@
       <div class="row">
         <div class="col-sm-6">
           <label for="docType">Tipo de documento</label>
-          <select id="docType" name="docType" data-checkout="docType" type="text" class="form-control"></select>
+          <select id="docType" name="hidden" disabled="" data-checkout="docType" type="text" class="form-control"></select>
         </div>
         <div class="col-sm-6">
-          <label for="docNumber">Número do documento</label>
-          <input id="docNumber" name="docNumber" data-checkout="docNumber" type="text" class="form-control" value="<?=(!empty($cliente))?$cliente['numero_doc']:'' ?>">
+          <label for="docNumber">Número do documento <small <?=(!empty($_GET['cpf']))?'style="color: red;"':''; ?> id="error_doc"><?=(!empty($_GET['cpf']))?'CPF Invalido':''; ?></small></label>
+          <input id="docNumber" name="docNumber" data-checkout="docNumber" type="number" class="form-control" <?=(!empty($cliente))?'readonly=""':'' ?> value="<?=(!empty($cliente))?$cliente['numero_doc']:'' ?>">
         </div>
       </div>
       <div class="row">
